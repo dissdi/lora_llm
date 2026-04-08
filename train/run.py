@@ -3,11 +3,14 @@ from datasets import load_dataset
 from model.llm import LLM
 from config import ModelConfig
 from utils.lora_utils import freeze_non_lora, print_trainable_prams
+from data.dataset import build_dataset
 
 config = ModelConfig()
 model = LLM(config)
 freeze_non_lora(model)
 print_trainable_prams(model)
+
+train_dataset, valid_dataset, tokenizer = build_dataset(config)
 
 tokenizer = AutoTokenizer.from_pretrained("gpt2")
 tokenizer.pad_token = tokenizer.eos_token
