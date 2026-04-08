@@ -33,7 +33,7 @@ class MultiHeadAttention(nn.Module):
         
         # causal attention
         scale = math.sqrt(self.d_head)
-        attn = (q @ k.transpose(-2, -1)) / scale # (B, H, T, T)
+        attn = (q @ k.transpose(-2, -1)) / scale # (B, H, d_head, T)
         
         causal_mask = torch.tril(torch.ones(T, T, device=x.device)).unfreeze(0).unsqueeze(0)
         attn = attn.masked_fill(causal_mask == 0, float('-inf'))
